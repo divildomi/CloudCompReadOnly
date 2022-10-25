@@ -98,6 +98,7 @@ function AddItemForm({ onNewItem }) {
                     type="text"
                     placeholder="New Item"
                     aria-describedby="basic-addon1"
+		    readOnly={true}
                 />
                 <InputGroup.Append>
                     <Button
@@ -105,6 +106,7 @@ function AddItemForm({ onNewItem }) {
                         variant="success"
                         disabled={!newItem.length}
                         className={submitting ? 'disabled' : ''}
+			readOnly={true}
                     >
                         {submitting ? 'Adding...' : 'Add Item'}
                     </Button>
@@ -128,12 +130,6 @@ function ItemDisplay({ item, onItemUpdate, onItemRemoval }) {
         })
             .then(r => r.json())
             .then(onItemUpdate);
-    };
-
-    const removeItem = () => {
-        fetch(`/items/${item.id}`, { method: 'DELETE' }).then(() =>
-            onItemRemoval(item),
-        );
     };
 
     return (

@@ -1,14 +1,19 @@
 function App() {
     const { Container, Row, Col } = ReactBootstrap;
+
     return (
         <Container>
+            
             <Row>
                 <Col md={{ offset: 3, span: 6 }}>
                     <TodoListCard />
                 </Col>
             </Row>
+
         </Container>
     );
+
+    
 }
 
 function TodoListCard() {
@@ -53,7 +58,7 @@ function TodoListCard() {
         <React.Fragment>
             <AddItemForm onNewItem={onNewItem} />
             {items.length === 0 && (
-		<p className="text-center">You have no todo items yet! Add one above!</p>
+                <p className="text-center">You have no todo items yet! Add one above!</p>
             )}
             {items.map(item => (
                 <ItemDisplay
@@ -98,7 +103,7 @@ function AddItemForm({ onNewItem }) {
                     type="text"
                     placeholder="New Item"
                     aria-describedby="basic-addon1"
-		    readOnly={true}
+                    readOnly={true}
                 />
                 <InputGroup.Append>
                     <Button
@@ -107,7 +112,7 @@ function AddItemForm({ onNewItem }) {
                         disabled={!newItem.length}
                         className={submitting ? 'disabled' : ''}
                     >
-                        {submitting ? 'Adding...' : 'Add Item'}
+                        {submitting ? 'Adding...' : 'A'}
                     </Button>
                 </InputGroup.Append>
             </InputGroup>
@@ -145,13 +150,12 @@ function ItemDisplay({ item, onItemUpdate, onItemRemoval }) {
                         className="toggles"
                         size="sm"
                         variant="link"
-			onClick={toggleCompletion}
-			readOnly={true}
                         aria-label={
                             item.completed
                                 ? 'Mark item as incomplete'
                                 : 'Mark item as complete'
                         }
+
                     >
                         <i
                             className={`far ${

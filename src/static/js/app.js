@@ -39,6 +39,14 @@ function TodoListCard() {
         [items],
     );
 
+    const onItemRemoval = React.useCallback(
+        item => {
+            const index = items.findIndex(i => i.id === item.id);
+            setItems([...items.slice(0, index), ...items.slice(index + 1)]);
+        },
+        [items],
+    );
+
     if (items === null) return 'Loading...';
 
     return (
@@ -53,6 +61,7 @@ function TodoListCard() {
                     key={item.id}
                     onItemUpdate={onItemUpdate}
                     onItemRemoval={onItemRemoval}
+		    readOnly={true}
                 />
             ))}
         </React.Fragment>
@@ -98,6 +107,7 @@ function AddItemForm({ onNewItem }) {
                         variant="success"
                         disabled={!newItem.length}
                         className={submitting ? 'disabled' : ''}
+			readOnly={true}
                     >
                         {submitting ? 'Adding...' : 'Add Item'}
                     </Button>

@@ -39,14 +39,6 @@ function TodoListCard() {
         [items],
     );
 
-    const onItemRemoval = React.useCallback(
-        item => {
-            const index = items.findIndex(i => i.id === item.id);
-            setItems([...items.slice(0, index), ...items.slice(index + 1)]);
-        },
-        [items],
-    );
-
     if (items === null) return 'Loading...';
 
     return (

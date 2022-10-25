@@ -27,6 +27,25 @@ function TodoListCard() {
         [items],
     );
 
+    const onItemUpdate = React.useCallback(
+        item => {
+            const index = items.findIndex(i => i.id === item.id);
+            setItems([
+                ...items.slice(0, index),
+                item,
+                ...items.slice(index + 1),
+            ]);
+        },
+        [items],
+    );
+
+    const onItemRemoval = React.useCallback(
+        item => {
+            const index = items.findIndex(i => i.id === item.id);
+            setItems([...items.slice(0, index), ...items.slice(index + 1)]);
+        },
+        [items],
+    );
 
     if (items === null) return 'Loading...';
 
@@ -38,9 +57,10 @@ function TodoListCard() {
             )}
             {items.map(item => (
                 <ItemDisplay
-		    readOnly={true}
                     item={item}
                     key={item.id}
+                    onItemUpdate={onItemUpdate}
+                    onItemRemoval={onItemRemoval}
                 />
             ))}
         </React.Fragment>
@@ -86,7 +106,6 @@ function AddItemForm({ onNewItem }) {
                         variant="success"
                         disabled={!newItem.length}
                         className={submitting ? 'disabled' : ''}
-			readOnly={true}
                     >
                         {submitting ? 'Adding...' : 'Add Item'}
                     </Button>
@@ -98,6 +117,7 @@ function AddItemForm({ onNewItem }) {
 
 function ItemDisplay({ item, onItemUpdate, onItemRemoval }) {
     const { Container, Row, Col, Button } = ReactBootstrap;
+    readOnly={true}
 
     const toggleCompletion = () => {
         fetch(`/items/${item.id}`, {
@@ -110,12 +130,6 @@ function ItemDisplay({ item, onItemUpdate, onItemRemoval }) {
         })
             .then(r => r.json())
             .then(onItemUpdate);
-    };
-
-    const removeItem = () => {
-        fetch(`/items/${item.id}`, { method: 'DELETE' }).then(() =>
-            onItemRemoval(item),
-        );
     };
 
     return (

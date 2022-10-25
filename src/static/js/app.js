@@ -117,7 +117,6 @@ function AddItemForm({ onNewItem }) {
 
 function ItemDisplay({ item, onItemUpdate, onItemRemoval }) {
     const { Container, Row, Col, Button } = ReactBootstrap;
-    readOnly={true}
 
     const toggleCompletion = () => {
         fetch(`/items/${item.id}`, {
@@ -130,6 +129,12 @@ function ItemDisplay({ item, onItemUpdate, onItemRemoval }) {
         })
             .then(r => r.json())
             .then(onItemUpdate);
+    };
+
+    const removeItem = () => {
+        fetch(`/items/${item.id}`, { method: 'DELETE' }).then(() =>
+            onItemRemoval(item),
+        );
     };
 
     return (
@@ -161,7 +166,6 @@ function ItemDisplay({ item, onItemUpdate, onItemRemoval }) {
                     <Button
                         size="sm"
                         variant="link"
-                        onClick={removeItem}
                         aria-label="Remove Item"
                     >
                         <i className="fa fa-trash text-danger" />

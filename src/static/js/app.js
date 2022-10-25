@@ -27,25 +27,6 @@ function TodoListCard() {
         [items],
     );
 
-    const onItemUpdate = React.useCallback(
-        item => {
-            const index = items.findIndex(i => i.id === item.id);
-            setItems([
-                ...items.slice(0, index),
-                item,
-                ...items.slice(index + 1),
-            ]);
-        },
-        [items],
-    );
-
-    const onItemRemoval = React.useCallback(
-        item => {
-            const index = items.findIndex(i => i.id === item.id);
-            setItems([...items.slice(0, index), ...items.slice(index + 1)]);
-        },
-        [items],
-    );
 
     if (items === null) return 'Loading...';
 
@@ -57,11 +38,9 @@ function TodoListCard() {
             )}
             {items.map(item => (
                 <ItemDisplay
+		    readOnly={true}
                     item={item}
                     key={item.id}
-                    onItemUpdate={onItemUpdate}
-                    onItemRemoval={onItemRemoval}
-		    readOnly={true}
                 />
             ))}
         </React.Fragment>
